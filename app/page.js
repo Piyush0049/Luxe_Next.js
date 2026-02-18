@@ -72,23 +72,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ───── BANNER ───── */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1920&q=80"
-          alt="Banner"
-          fill
-          className="object-cover opacity-30 fixed"
-        />
-        <div className="absolute inset-0 bg-background/50" />
-        <div className="relative z-10 text-center max-w-3xl px-6">
-          <h2 className="text-5xl md:text-7xl font-bold mb-10 tracking-tighter uppercase font-heading">Beyond <br /><span className="text-accent italic">Limits.</span></h2>
-          <p className="text-lg text-muted/80 mb-12 leading-relaxed font-medium">Crafted with precision, designed for longevity. Join the elite community of modern enthusiasts.</p>
-          <button className="px-14 py-6 border border-accent text-accent rounded-full text-xs font-bold tracking-[0.2em] hover:bg-accent hover:text-background transition-all">
-            OUR STORY
-          </button>
-        </div>
-      </section>
+
     </div>
   );
 }
