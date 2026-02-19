@@ -50,8 +50,8 @@ Follow these steps to set up the project locally.
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/your-username/luxe-frontend.git
-    cd luxe-frontend
+    git clone https://github.com/piyush0049/Luxe_Next.js.git
+    cd Luxe_Next.js
     ```
 
 2.  **Install dependencies**
@@ -115,7 +115,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-<p align="center">
-  Built with ❤️ by the LUXE Team
-</p>
