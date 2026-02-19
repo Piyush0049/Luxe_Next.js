@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { User, Mail, Settings, ShoppingBag, Heart, LogOut, ChevronRight, Camera, Phone, MapPin, Save, X, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import api from "@/lib/axios";
 
-export default function ProfilePage() {
+function ProfileContent() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [editMode, setEditMode] = useState(false);
@@ -452,6 +452,22 @@ export default function ProfilePage() {
                 </motion.div>
             </main>
         </div>
+    );
+}
+
+export default function ProfilePage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-background flex items-center justify-center">
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin"
+                ></motion.div>
+            </div>
+        }>
+            <ProfileContent />
+        </Suspense>
     );
 }
 
