@@ -30,8 +30,8 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-4xl"
           >
-            <span className="text-accent text-[11px] font-bold tracking-[0.4em] uppercase mb-8 block">New Season Drop</span>
-            <h1 className="text-7xl md:text-9xl font-extrabold tracking-tighter leading-[0.85] mb-10 font-heading">
+            <span className="text-accent text-[7px] sm:text-[11px] font-bold tracking-[0.4em] uppercase mb-8 block">New Season Drop</span>
+            <h1 className="text-4xl sm:text-7xl md:text-9xl font-extrabold tracking-tighter leading-[0.85] mb-10 font-heading">
               PURE <br />
               <span className="gradient-text italic">AESTHETIC.</span>
             </h1>
@@ -55,8 +55,8 @@ export default function Home() {
 
       {/* ───── FEATURED ───── */}
       <section className="max-w-[1400px] mx-auto px-6 py-40">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter font-heading">
+        <div className="flex flex-col md:flex-row justify-between sm:items-end gap-10 mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter font-heading">
             CURATED <br />
             <span className="text-accent">HIGHLIGHTS.</span>
           </h2>

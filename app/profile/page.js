@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { User, Mail, Settings, ShoppingBag, Heart, LogOut, ChevronRight, Camera, Phone, MapPin, Save, X, Loader2 } from "lucide-react";
+import { User, Mail, Settings, ShoppingBag, Heart, LogOut, ChevronRight, Camera, Phone, MapPin, Save, X, Loader2, Menu } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,6 +25,7 @@ function ProfileContent() {
     const [orders, setOrders] = useState([]);
     const [ordersLoading, setOrdersLoading] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -160,23 +161,6 @@ function ProfileContent() {
                         </div>
 
                         <div className="absolute -bottom-10 left-10 flex flex-wrap items-end gap-6">
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                className="relative"
-                            >
-                                <div className="w-36 h-36 rounded-3xl bg-[#0a0a0c] border-[6px] border-background flex items-center justify-center overflow-hidden shadow-2xl">
-                                    {user?.profileImage ? (
-                                        <img src={user.profileImage} alt={user.name} className="w-full h-full object-cover" />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-accent text-5xl font-heading font-bold">
-                                            {user?.name?.charAt(0).toUpperCase() || "M"}
-                                        </div>
-                                    )}
-                                </div>
-                                <button className="absolute bottom-2 right-2 p-2.5 bg-accent text-background rounded-xl hover:bg-white transition-colors shadow-lg group">
-                                    <Camera size={18} className="group-hover:scale-110 transition-transform" />
-                                </button>
-                            </motion.div>
 
                             <div className="mb-4">
                                 <h1 className="text-4xl font-heading uppercase tracking-tighter text-white">{user?.name || "Member"}</h1>
@@ -188,59 +172,84 @@ function ProfileContent() {
                     </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-24">
-                        {/* Sidebar */}
-                        <motion.div variants={itemVariants} className="lg:col-span-1 space-y-4">
-                            <div className="bg-[#0a0a0c] border border-white/5 rounded-[2rem] p-3 shadow-xl">
-                                <nav className="space-y-1">
-                                    <SidebarLink
-                                        icon={<User size={18} />}
-                                        label="Personal Info"
-                                        active={activeTab === "info"}
-                                        onClick={() => setActiveTab("info")}
-                                    />
-                                    <SidebarLink
-                                        icon={<ShoppingBag size={18} />}
-                                        label="My Orders"
-                                        active={activeTab === "orders"}
-                                        onClick={() => setActiveTab("orders")}
-                                    />
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-red-400 hover:bg-red-400/5 transition-all rounded-2xl group"
-                                    >
-                                        <LogOut size={18} className="group-hover:animate-pulse" />
-                                        <span>Logout</span>
-                                        <ChevronRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                                    </button>
-                                </nav>
-                            </div>
-
-                            <motion.div
-                                whileHover={{ y: -5 }}
-                                className="bg-gradient-to-br from-accent/10 to-transparent border border-accent/20 rounded-[2rem] p-8 relative overflow-hidden group"
+                        {/* Mobile Sidebar Toggle */}
+                        <div className="lg:hidden mb-2">
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                className="w-full flex items-center justify-between px-6 py-4 bg-[#0a0a0c] border border-white/5 rounded-2xl text-white font-bold uppercase tracking-widest text-[10px] shadow-lg active:scale-95 transition-transform"
                             >
-                                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:rotate-12 transition-transform duration-500">
-                                    <Sparkles size={60} />
+                                <div className="flex items-center gap-3">
+                                    {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
+                                    <span>{mobileMenuOpen ? "Close Menu" : "Profile Menu"}</span>
                                 </div>
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="p-2 bg-accent text-background rounded-lg shadow-[0_0_20px_rgba(212,255,63,0.3)]">
-                                        <Sparkles size={16} />
+                                <ChevronRight size={14} className={`transition-transform duration-300 ${mobileMenuOpen ? "rotate-90" : "rotate-0"}`} />
+                            </button>
+                        </div>
+
+                        {/* Sidebar */}
+                        {/* Sidebar */}
+                        <AnimatePresence>
+                            {(mobileMenuOpen || (typeof window !== 'undefined' && window.innerWidth >= 1024)) && (
+                                <motion.div
+                                    variants={itemVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="hidden"
+                                    className={`lg:col-span-1 space-y-4 ${mobileMenuOpen ? 'block' : 'hidden lg:block'}`}
+                                >
+                                    <div className="bg-[#0a0a0c] border border-white/5 rounded-[2rem] p-3 shadow-xl">
+                                        <nav className="space-y-1">
+                                            <SidebarLink
+                                                icon={<User size={18} />}
+                                                label="Personal Info"
+                                                active={activeTab === "info"}
+                                                onClick={() => { setActiveTab("info"); setMobileMenuOpen(false); }}
+                                            />
+                                            <SidebarLink
+                                                icon={<ShoppingBag size={18} />}
+                                                label="My Orders"
+                                                active={activeTab === "orders"}
+                                                onClick={() => { setActiveTab("orders"); setMobileMenuOpen(false); }}
+                                            />
+                                            <button
+                                                onClick={handleLogout}
+                                                className="w-full flex items-center gap-4 px-6 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-red-400 hover:bg-red-400/5 transition-all rounded-2xl group"
+                                            >
+                                                <LogOut size={18} className="group-hover:animate-pulse" />
+                                                <span>Logout</span>
+                                                <ChevronRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                                            </button>
+                                        </nav>
                                     </div>
-                                    <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-accent">Luxe Gold Member</h3>
-                                </div>
-                                <p className="text-[10px] text-zinc-300 leading-relaxed font-bold uppercase tracking-widest">
-                                    2,450 points earned. 550 points until Platinum.
-                                </p>
-                                <div className="mt-6 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+
                                     <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={{ width: "75%" }}
-                                        transition={{ duration: 1, delay: 0.5 }}
-                                        className="h-full bg-accent"
-                                    />
-                                </div>
-                            </motion.div>
-                        </motion.div>
+                                        whileHover={{ y: -5 }}
+                                        className="bg-gradient-to-br from-accent/10 to-transparent border border-accent/20 rounded-[2rem] p-8 relative overflow-hidden group"
+                                    >
+                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:rotate-12 transition-transform duration-500">
+                                            <Sparkles size={60} />
+                                        </div>
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="p-2 bg-accent text-background rounded-lg shadow-[0_0_20px_rgba(212,255,63,0.3)]">
+                                                <Sparkles size={16} />
+                                            </div>
+                                            <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-accent">Luxe Gold Member</h3>
+                                        </div>
+                                        <p className="text-[10px] text-zinc-300 leading-relaxed font-bold uppercase tracking-widest">
+                                            2,450 points earned. 550 points until Platinum.
+                                        </p>
+                                        <div className="mt-6 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: "75%" }}
+                                                transition={{ duration: 1, delay: 0.5 }}
+                                                className="h-full bg-accent"
+                                            />
+                                        </div>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Content Area */}
                         <motion.div variants={itemVariants} className="lg:col-span-2 space-y-8">

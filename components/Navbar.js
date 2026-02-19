@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ShoppingBag, Search, Menu, User, LogOut } from "lucide-react";
+import { ShoppingBag, Search, Menu, X, User, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 export default function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const router = useRouter();
     const cartItems = useSelector((state) => state.cart.totalQuantity);
 
@@ -52,10 +53,14 @@ export default function Navbar() {
     };
 
     return (
+        <>
         <nav className="fixed top-0 left-0 right-0 z-50 bg-background/50 premium-blur border-b border-white/5 py-6">
             <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
                 <div className="flex gap-8 items-center">
-                    <button className="lg:hidden text-foreground">
+                    <button
+                        className="lg:hidden text-foreground"
+                        onClick={() => setIsMenuOpen(true)}
+                    >
                         <Menu size={20} />
                     </button>
                     <div className="hidden lg:flex gap-8 items-center">
@@ -103,5 +108,39 @@ export default function Navbar() {
                 </div>
             </div>
         </nav>
+
+        {/* Mobile Sidebar Overlay */}
+        {isMenuOpen && (
+            <div
+                className="fixed inset-0 z-50 bg-black/60"
+                onClick={() => setIsMenuOpen(false)}
+            />
+        )}
+
+        {/* Mobile Sidebar */}
+        <div className={`fixed top-0 left-0 z-50 h-full w-72 bg-background border-r border-white/10 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+            <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
+                <span className="text-xl font-bold tracking-tight font-heading">LUX<span className="text-accent">E.</span></span>
+                <button onClick={() => setIsMenuOpen(false)} className="text-foreground/70 hover:text-foreground">
+                    <X size={20} />
+                </button>
+            </div>
+            <nav className="flex flex-col px-6 py-8 gap-6">
+                <Link href="/shop" onClick={() => setIsMenuOpen(false)} className="text-[11px] font-bold tracking-[0.3em] hover:text-accent transition-colors">SHOP</Link>
+                <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-[11px] font-bold tracking-[0.3em] hover:text-accent transition-colors">COLLECTIONS</Link>
+                {!isLoggedIn ? (
+                    <>
+                        <Link href="/login" onClick={() => setIsMenuOpen(false)} className="text-[11px] font-bold tracking-[0.3em] hover:text-accent transition-colors">LOGIN</Link>
+                        <Link href="/signup" onClick={() => setIsMenuOpen(false)} className="text-[11px] font-bold tracking-[0.3em] hover:text-accent transition-colors">SIGN UP</Link>
+                    </>
+                ) : (
+                    <>
+                        <Link href="/profile" onClick={() => setIsMenuOpen(false)} className="text-[11px] font-bold tracking-[0.3em] hover:text-accent transition-colors">PROFILE</Link>
+                        <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="text-left text-[11px] font-bold tracking-[0.3em] text-red-400 hover:text-red-300 transition-colors">LOGOUT</button>
+                    </>
+                )}
+            </nav>
+        </div>
+        </>
     );
 }
