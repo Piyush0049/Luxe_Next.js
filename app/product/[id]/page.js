@@ -208,7 +208,7 @@ export default function ProductDetails({ params }) {
                                         <span className="text-[9px] font-black tracking-[0.3em] text-zinc-500 uppercase">Art. No {product.id}821</span>
                                     </div>
 
-                                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black tracking-tighter leading-[0.9] mb-10 uppercase text-white break-words">
+                                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-heading font-black tracking-tighter leading-[0.9] mb-10 uppercase text-white break-words">
                                         {product.name}
                                     </h1>
 
@@ -246,7 +246,7 @@ export default function ProductDetails({ params }) {
                                         </div>
                                     </div>
 
-                                    <p className="text-xl text-zinc-400 font-medium leading-relaxed mb-16 max-w-xl italic">
+                                    <p className="text-lg text-zinc-400 font-medium leading-relaxed mb-16 max-w-xl italic">
                                         "{product.description || `Exquisitely crafted to transcend temporal boundaries, the ${product.name} serves as a definitive statement of luxury and artisanal heritage.`}"
                                     </p>
 

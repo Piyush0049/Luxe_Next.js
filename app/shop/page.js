@@ -80,16 +80,16 @@ export default function ShopPage() {
 
             <div className="pt-40 pb-20 px-6">
                 <div className="max-w-[1400px] mx-auto">
-                    <header className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
+                    <header className="flex flex-col md:flex-row justify-between sm:items-end gap-10 mb-20">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             className="max-w-2xl"
                         >
-                            <span className="text-accent text-[11px] font-bold tracking-[0.4em] uppercase mb-4 block flex items-center gap-2">
+                            <span className="text-accent text-[9px] sm:text-[11px] font-bold tracking-[0.4em] uppercase mb-4 block flex items-center gap-2">
                                 <Sparkles size={12} /> Curated Luxury
                             </span>
-                            <h1 className="text-5xl md:text-8xl font-bold tracking-tighter font-heading uppercase leading-[0.85]">
+                            <h1 className="text-3xl sm:text-5xl md:text-8xl font-bold tracking-tighter font-heading uppercase leading-[0.85]">
                                 The <br /><span className="text-accent italic">Collection.</span>
                             </h1>
                         </motion.div>
